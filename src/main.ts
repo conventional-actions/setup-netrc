@@ -1,16 +1,23 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as os from 'os'
+import {promises as fs} from 'fs'
+import * as path from 'path'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    const machine = encodeURI(core.getInput('machine')) || 'github.com'
+    const username =
+      encodeURI(core.getInput('username')) ||
+      process.env['GITHUB_REPOSITORY_OWNER'] ||
+      "''"
+    const password =
+      encodeURI(core.getInput('password')) ||
+      process.env['GITHUB_TOKEN'] ||
+      "''"
+    const line = `machine ${machine} login ${username} password ${password}\n`
+    const netrc = path.resolve(os.homedir(), '.netrc')
+    await fs.writeFile(netrc, line, {flag: 'a', mode: 0o600})
+    return
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

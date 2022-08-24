@@ -2,10 +2,17 @@ name: 'setup-netrc'
 description: 'Setup .netrc file'
 author: 'Conventional Actions'
 inputs:
-  milliseconds: # change this
+  machine:
+    description: 'The remote machine name'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  username:
+    description: 'The remote username'
+    required: false
+    default: ''
+  password:
+    description: 'The remote password'
+    required: false
+    default: ''
 runs:
   using: 'node16'
   main: 'dist/index.js'
