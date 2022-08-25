@@ -12,13 +12,13 @@ test('test runs', () => {
   process.env['INPUT_PASSWORD'] = 'pass'
 
   const np = process.execPath
-  const ip = path.join(__dirname, '..', 'dist', 'main.js')
+  const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecFileSyncOptions = {
     env: process.env
   }
 
   const netrc = path.resolve(os.homedir(), '.netrc')
-  console.log(cp.execFileSync(np, [ip], options).toString())
+  cp.execFileSync(np, [ip], options)
 
   const contents = fs.readFileSync(netrc)
   console.log(contents.toString('utf-8'))
