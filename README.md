@@ -1,14 +1,43 @@
 # setup-netrc
 
-## Validate
+A GitHub Action for setting up a .netrc file for accessing private Go repositories.
 
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
+## Usage
+
+To use the GitHub Action, add the following to your job:
 
 ```yaml
-uses: ./
-with:
-  milliseconds: 1000
+- uses: conventional-actions/setup-netrc@v1
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
+### Inputs
 
+| Name       | Default                    | Description             |
+|------------|----------------------------|-------------------------|
+| `machine`  | `github.com`               | the remote machine name |
+| `username` | `$GITHUB_REPOSITORY_OWNER` | the remote username     |
+| `password` | `$GITHUB_TOKEN`            | the remote password     |
+
+### Outputs
+
+No outputs
+
+### Example
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: conventional-actions/setup-netrc@v1
+```
+
+## License
+
+The scripts and documentation in this project are released under the [MIT License](LICENSE).
