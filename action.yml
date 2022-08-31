@@ -4,15 +4,16 @@ author: 'Conventional Actions'
 inputs:
   machine:
     description: 'The remote machine name'
-    required: true
+    required: false
+    default: 'github.com'
   username:
     description: 'The remote username'
     required: false
-    default: ''
+    default: '' # GITHUB_REPOSITORY_OWNER
   password:
     description: 'The remote password'
     required: false
-    default: ''
+    default: '' # GITHUB_TOKEN
 runs:
   using: 'node16'
   main: 'dist/index.js'
